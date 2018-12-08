@@ -9,8 +9,51 @@
 " Resources:
 "   vim-plug: https://github.com/junegunn/vim-plug
 
+" Functions {{{
+let s:is_win = has('win32')
+
+function! s:trim(str)
+  return substitute(a:str, '[\/]\+$', '', '')
+endfunction
+
+if s:is_win
+  function! s:path(path)
+    return s:trim(substitute(a:path, '/', '\', 'g'))
+  endfunction
+else
+  function! s:path(path)
+    return s:trim(a:path)
+  endfunction
+endif
+
+function MarkdownLevel()
+  let l:h = matchstr(getline(v:lnum), '#\+')
+  if empty(l:h) || len(l:h) == 1
+    return '='
+  else
+    return '>' . (len(l:h) - 1)
+  endif
+endfunction
+
+function CCTypes()
+  call matchadd('Todo', '\<Hack\>')
+  call matchadd('Todo', '\<Note\>')
+endfunction
+
+function ChangeCtrlPCmd()
+  let currentDir = expand("%:p:h")
+  let gitrepo = system('git -C ' . currentDir . ' rev-parse')
+  if gitrepo =~? 'fatal'
+    let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
+  else
+    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  endif
+endfunction
+" }}}
 " Vim-Plug {{{
-call plug#begin()
+let ppath = s:path(split(&rtp, ',')[0]) . '/plugins/'
+let phome = s:path(split(&rtp, ',')[0]) . '/plugged/'
+call plug#begin(phome)
 Plug 'equalsraf/neovim-gui-shim'                    " Gui helper by the same author
 Plug 'git@gitlab.com:lmariscal/vim-monokai-pro.git' " Small colorscheme
 Plug 'mileszs/ack.vim'                              " Silver searcher in vim
@@ -30,7 +73,7 @@ Plug 'easymotion/vim-easymotion'                    " Easy motion
 Plug 'zah/nim.vim'                                  " Nim syntax
 Plug 'rust-lang/rust.vim'                           " Rust Syntax
 Plug 'racer-rust/vim-racer'                         " Rust Autocompletion
-Plug 'git@gitlab.com:lmariscal/lvimplug.git'        " Cav Lua
+Plug ppath . 'lvimplug'                             " Cav Lua
 call plug#end()
 " }}}
 " Set {{{
@@ -165,31 +208,7 @@ let g:ale_cs_mcsc_assemblies = [
 let g:ackprg = 'ag --vimgrep'
 " }}}
 " Options {{{
-function MarkdownLevel()
-  let l:h = matchstr(getline(v:lnum), '#\+')
-  if empty(l:h) || len(l:h) == 1
-    return '='
-  else
-    return '>' . (len(l:h) - 1)
-  endif
-endfunction
-
-function CCTypes()
-  call matchadd('Todo', '\<Hack\>')
-  call matchadd('Todo', '\<Note\>')
-endfunction
-
-function ChangeCtrlPCmd()
-  let currentDir = expand("%:p:h")
-  let gitrepo = system('git -C ' . currentDir . ' rev-parse')
-  if gitrepo =~? 'fatal'
-    let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
-  else
-    let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-  endif
-endfunction
-
-if has("win32")
+if s:is_win
   let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
 else
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
