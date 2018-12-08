@@ -55,7 +55,6 @@ let ppath = s:path(split(&rtp, ',')[0]) . '/plugins/'
 let phome = s:path(split(&rtp, ',')[0]) . '/plugged/'
 call plug#begin(phome)
 Plug 'equalsraf/neovim-gui-shim'                    " Gui helper by the same author
-Plug 'git@gitlab.com:lmariscal/vim-monokai-pro.git' " Small colorscheme
 Plug 'mileszs/ack.vim'                              " Silver searcher in vim
 Plug 'lervag/vimtex'                                " Latex Support
 Plug 'Valloric/YouCompleteMe'                       " Autocomplete for vim
@@ -73,7 +72,8 @@ Plug 'easymotion/vim-easymotion'                    " Easy motion
 Plug 'zah/nim.vim'                                  " Nim syntax
 Plug 'rust-lang/rust.vim'                           " Rust Syntax
 Plug 'racer-rust/vim-racer'                         " Rust Autocompletion
-Plug ppath . 'lvimplug'                             " Cav Lua
+Plug ppath . 'lvimplug'                             " Cav Lua Example
+Plug ppath . 'monokai_pro'                          " Monokai Pro Theme
 call plug#end()
 " }}}
 " Set {{{
