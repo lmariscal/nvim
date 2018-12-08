@@ -54,26 +54,27 @@ endfunction
 let ppath = s:path(split(&rtp, ',')[0]) . '/plugins/'
 let phome = s:path(split(&rtp, ',')[0]) . '/plugged/'
 call plug#begin(phome)
-Plug 'equalsraf/neovim-gui-shim'                    " Gui helper by the same author
-Plug 'mileszs/ack.vim'                              " Silver searcher in vim
-Plug 'lervag/vimtex'                                " Latex Support
-Plug 'Valloric/YouCompleteMe'                       " Autocomplete for vim
-Plug 'ctrlpvim/ctrlp.vim'                           " Fuzzy Finder
-Plug 'jiangmiao/auto-pairs'                         " Auto Pair Help
-Plug 'vim-scripts/a.vim'                            " Quickly toggle .h to .cc
-Plug 'mhinz/vim-startify'                           " Beautiful Start menu
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }         " Better than org mode
-Plug 'tpope/vim-fugitive'                           " Git commands
-Plug 'editorconfig/editorconfig-vim'                " Config for all editors
-Plug 'wesQ3/vim-windowswap'                         " Swap windows easily
-Plug 'w0rp/ale'                                     " Lint engine for not c++ stuff
-Plug 'tikhomirov/vim-glsl'                          " GLSL syntax
-Plug 'easymotion/vim-easymotion'                    " Easy motion
-Plug 'zah/nim.vim'                                  " Nim syntax
-Plug 'rust-lang/rust.vim'                           " Rust Syntax
-Plug 'racer-rust/vim-racer'                         " Rust Autocompletion
-Plug ppath . 'lvimplug'                             " Cav Lua Example
-Plug ppath . 'monokai_pro'                          " Monokai Pro Theme
+Plug 'equalsraf/neovim-gui-shim'            " QT Gui Helper
+Plug 'mileszs/ack.vim'                      " Silver searcher in vim
+Plug 'lervag/vimtex'                        " Latex Support
+Plug 'Valloric/YouCompleteMe'               " Autocomplete for vim
+Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy Finder
+Plug 'jiangmiao/auto-pairs'                 " Auto Pair Help
+Plug 'vim-scripts/a.vim'                    " Quickly toggle .h to .cc
+Plug 'mhinz/vim-startify'                   " Beautiful Start menu
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Better than org mode
+Plug 'tpope/vim-fugitive'                   " Git commands
+Plug 'editorconfig/editorconfig-vim'        " Config for all editors
+Plug 'wesQ3/vim-windowswap'                 " Swap windows easily
+Plug 'w0rp/ale'                             " Lint engine for not c++ stuff
+Plug 'tikhomirov/vim-glsl'                  " GLSL syntax
+Plug 'easymotion/vim-easymotion'            " Easy motion
+Plug 'zah/nim.vim'                          " Nim syntax
+Plug 'rust-lang/rust.vim'                   " Rust Syntax
+Plug 'racer-rust/vim-racer'                 " Rust Autocompletion
+Plug 'scrooloose/nerdtree'                  " File Explorer
+Plug ppath . 'lvimplug'                     " Cav Lua Example
+Plug ppath . 'monokai_pro'                  " Monokai Pro Theme
 call plug#end()
 " }}}
 " Set {{{
@@ -242,6 +243,7 @@ nnoremap k gk
 nnoremap B ^
 nnoremap E $
 nnoremap <leader>f za
+nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>a :A<cr>
 nnoremap <leader>va :AV<cr>
 nnoremap <leader>sa :AS<cr>
