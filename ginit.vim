@@ -1,4 +1,4 @@
-:Guifont! Roboto Mono:h10:b
+:Guifont Hack:h10
 
 augroup auguicommands
   au BufEnter * :call GuiWindowFullScreen(1)

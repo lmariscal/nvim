@@ -115,15 +115,15 @@ set laststatus=2
 set autoindent
 
 set statusline=
-set statusline+=%0*\ %{fugitive#statusline()}             " Git branch
-set statusline+=%0*\ %t\ \|                               " File name
-set statusline+=%0*\ %y\ \|                               " FileType
-set statusline+=%0*\ %{''.(&fenc!=''?&fenc:&enc).''}\ \|  " Encoding
-set statusline+=%0*\ %{&ff}\                              " FileFormat (dos/unix..)
-set statusline+=%0*\ %=                                   " Separation
-set statusline+=%0*\ row:%l/%L\ (%03p%%)\ \|              " Rownumber/total (%)
-set statusline+=%0*\ col:%03c\                            " Colnr
-set statusline+=%0*\ \ %m%r%w\                            " Modified? Readonly?.
+set statusline+=%0*\ %{fugitive#statusline()}            " Git branch
+set statusline+=%0*\ %t\ \|                              " File name
+set statusline+=%0*\ %y\ \|                              " FileType
+set statusline+=%0*\ %{''.(&fenc!=''?&fenc:&enc).''}\ \| " Encoding
+set statusline+=%0*\ %{&ff}\                             " FileFormat (dos/unix..)
+set statusline+=%0*\ %=                                  " Separation
+set statusline+=%0*\ row:%l/%L\ (%03p%%)\ \|             " Rownumber/total (%)
+set statusline+=%0*\ col:%03c\                           " Colnr
+set statusline+=%0*\ \ %m%r%w\                           " Modified? Readonly?.
 
 set foldenable
 set foldmethod=marker
