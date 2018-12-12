@@ -55,14 +55,16 @@ let ppath = s:path(split(&rtp, ',')[0]) . '/plugins/'
 let phome = s:path(split(&rtp, ',')[0]) . '/plugged/'
 call plug#begin(phome)
 " Languages
-Plug 'vimwiki/vimwiki',      { 'branch': 'dev' } " Better than org mode
-Plug 'zah/nim.vim',          { 'for': 'nim' }    " Nim syntax
-Plug 'rust-lang/rust.vim',   { 'for': 'rust' }   " Rust Syntax
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }   " Rust Autocompletion
-Plug 'tikhomirov/vim-glsl',  { 'for': 'glsl' }   " GLSL syntax
-Plug 'lervag/vimtex',        { 'for': 'latex' }  " Latex Support
+Plug 'vimwiki/vimwiki',      { 'branch': 'dev' }          " Better than org mode
+Plug 'zah/nim.vim',          { 'for': 'nim' }             " Nim syntax
+Plug 'rust-lang/rust.vim',   { 'for': 'rust' }            " Rust Syntax
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }            " Rust Autocompletion
+Plug 'tikhomirov/vim-glsl',  { 'for': 'glsl' }            " GLSL syntax
+Plug 'lervag/vimtex',        { 'for': 'latex' }           " Latex Support
+Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' } " Improved cpp high
 
 " UI
+Plug 'dracula/vim', { 'as': 'dracula' }                 " Dracula colorscheme
 Plug 'equalsraf/neovim-gui-shim'                        " QT Gui Helper
 Plug 'mhinz/vim-startify'                               " Beautiful Start menu
 Plug 'wesQ3/vim-windowswap'                             " Swap windows easily
