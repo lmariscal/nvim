@@ -1,7 +1,7 @@
 ﻿" init.vim
 "
 " Author: Leonardo Mariscal
-" Source: https://cav.bz/nvim
+" Source: https://ldmd.mx/nvim
 " Description: My vimrc for neovim, so init.vim. Grab whatever you want
 " Hack: If you have trouble in linux run "dos2unix init.vim"
 " Website: http://lmariscal.com/
@@ -72,14 +72,26 @@ Plug 'easymotion/vim-easymotion'                        " Easy motion
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
 
 " Vim Tools
-Plug 'Valloric/YouCompleteMe'        " Autocomplete for vim
-Plug 'ctrlpvim/ctrlp.vim'            " Fuzzy Finder
-Plug 'jiangmiao/auto-pairs'          " Auto Pair Help
-Plug 'vim-scripts/a.vim'             " Quickly toggle .h to .cc
-Plug 'tpope/vim-fugitive'            " Git commands
-Plug 'editorconfig/editorconfig-vim' " Config for all editors
-Plug 'junegunn/vim-easy-align'       " Code Alignment
-Plug 'w0rp/ale'                      " Lint engine for not c++ stuff
+"Plug 'Valloric/YouCompleteMe'                                " Autocomplete for vim
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+
+Plug 'Shougo/neosnippet.vim'                                  " Snippet Manager
+Plug 'Shougo/neosnippet-snippets'                             " Default Snippets
+Plug 'Shougo/deoplete-clangx'                                 " Clang Autocomplete
+Plug 'ctrlpvim/ctrlp.vim'                                     " Fuzzy Finder
+Plug 'jiangmiao/auto-pairs'                                   " Auto Pair Help
+Plug 'vim-scripts/a.vim'                                      " Quickly toggle .h to .cc
+Plug 'tpope/vim-fugitive'                                     " Git commands
+Plug 'editorconfig/editorconfig-vim'                          " Config for all editors
+Plug 'junegunn/vim-easy-align'                                " Code Alignment
+Plug 'w0rp/ale'                                               " Lint engine for not c++ stuff
 
 " Custom
 Plug ppath . 'lvimplug'    " Cav Lua Example
@@ -140,10 +152,16 @@ if has('persistent_undo')
 endif
 " }}}
 " Let {{{
+let g:deoplete#enable_at_startup = 1
 let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
-let g:python3_host_prog='C:/Users/lmariscal/AppData/Local/Programs/Python/Python36-32/python.exe'
-let g:python_host_prog='C:/Python27/python.exe'
+
+if s:is_win
+  let g:python3_host_prog = "C:/Users/lmariscal/AppData/Local/Programs/Python/Python37/python.exe"
+  let g:python_host_prog='C:/Python27/python.exe'
+  let g:clang_library_path='C:/Program\ Files/LLVM/lib'
+endif
+
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:vimwiki_list= [{'ext': '.md',
@@ -151,7 +169,6 @@ let g:vimwiki_list= [{'ext': '.md',
       \ 'syntax': 'markdown'}]
 let g:vimwiki_folding='custom'
 let g:vim_markdown_folding_disabled = 1
-let g:clang_library_path='C:\\Program\ Files\\LLVM\\lib'
 let g:gitgutter_enabled = 1
 let g:ctrlp_map = '<c-q>'
 let g:ctrlp_prompt_mappings = {
@@ -281,6 +298,9 @@ omap f <Plug>(easymotion-bd-fl)
 omap F <Plug>(easymotion-Fl)
 omap / <Plug>(easymotion-tn)
 xmap ga <Plug>(EasyAlign)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
   " }}}
 " AutoCMD {{{
 augroup aucommands
