@@ -153,6 +153,7 @@ endif
 " }}}
 " Let {{{
 let g:deoplete#enable_at_startup = 1
+let g:neosnippet#snippets_directory = s:path(split(&rtp, ',')[0]) . '/snips/'
 let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
 
