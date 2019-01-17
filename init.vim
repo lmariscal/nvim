@@ -58,7 +58,6 @@ call plug#begin(phome)
 Plug 'vimwiki/vimwiki',      { 'branch': 'dev' }          " Better than org mode
 Plug 'zah/nim.vim',          { 'for': 'nim' }             " Nim syntax
 Plug 'rust-lang/rust.vim',   { 'for': 'rust' }            " Rust Syntax
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }            " Rust Autocompletion
 Plug 'tikhomirov/vim-glsl',  { 'for': 'glsl' }            " GLSL syntax
 Plug 'lervag/vimtex',        { 'for': 'latex' }           " Latex Support
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' } " Improved cpp high
@@ -85,6 +84,7 @@ let g:deoplete#enable_at_startup = 1
 Plug 'Shougo/neosnippet.vim'                                  " Snippet Manager
 Plug 'Shougo/neosnippet-snippets'                             " Default Snippets
 Plug 'Shougo/deoplete-clangx'                                 " Clang Autocomplete
+Plug 'sebastianmarkow/deoplete-rust'
 Plug 'ctrlpvim/ctrlp.vim'                                     " Fuzzy Finder
 Plug 'jiangmiao/auto-pairs'                                   " Auto Pair Help
 Plug 'vim-scripts/a.vim'                                      " Quickly toggle .h to .cc
@@ -161,6 +161,8 @@ if s:is_win
   let g:python3_host_prog = "C:/Users/lmariscal/AppData/Local/Programs/Python/Python37/python.exe"
   let g:python_host_prog='C:/Python27/python.exe'
   let g:clang_library_path='C:/Program\ Files/LLVM/lib'
+  let g:deoplete#sources#rust#racer_binary='C:/Users/lmariscal/.cargo/bin/racer.exe'
+  let g:deoplete#sources#rust#rust_source_path='A:/dev/rust/src'
 endif
 
 let g:EasyMotion_do_mapping = 0
@@ -281,6 +283,7 @@ nnoremap <M-k> <C-W>k<C-W>_
 nnoremap <M-h> <C-W>h<C-W><Bar>
 nnoremap <M-l> <C-W>l<C-W><Bar>
 nnoremap <C-g> :call JumpToDef()<cr>
+nnoremap <leader>O zczA
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 nmap s <Plug>(easymotion-s2)
