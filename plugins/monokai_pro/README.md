@@ -1,8 +1,8 @@
-== vim-monokai-pro
+## vim-monokai-pro
 
 Monokai Pro color scheme for Vim / Neovim. Inspired by https://www.monokai.pro/.
 
-== License
+## License
 
 MIT License
 

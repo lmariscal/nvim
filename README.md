@@ -1,4 +1,4 @@
-== NVim Settings
+## NVim Settings
 
 My full config for nvim.
 
