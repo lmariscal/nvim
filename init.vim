@@ -58,6 +58,7 @@ call plug#begin(phome)
 Plug 'vimwiki/vimwiki',      { 'branch': 'dev' }          " Better than org mode
 Plug 'zah/nim.vim',          { 'for': 'nim' }             " Nim syntax
 Plug 'rust-lang/rust.vim',   { 'for': 'rust' }            " Rust Syntax
+Plug 'leafgarland/typescript-vim', { 'for': 'ts' }
 Plug 'tikhomirov/vim-glsl',  { 'for': 'glsl' }            " GLSL syntax
 Plug 'lervag/vimtex',        { 'for': 'latex' }           " Latex Support
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' } " Improved cpp high
@@ -96,6 +97,7 @@ Plug 'w0rp/ale'                                               " Lint engine for 
 " Custom
 Plug ppath . 'lvimplug'    " Cav Lua Example
 Plug ppath . 'monokai_pro' " Monokai Pro Theme
+Plug ppath . 'triplet.vim' " Triplet Theme
 call plug#end()
 " }}}
 " Set {{{
@@ -158,7 +160,7 @@ let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
 
 if s:is_win
-  let g:python3_host_prog = "C:/Users/lmariscal/AppData/Local/Programs/Python/Python37/python.exe"
+  let g:python3_host_prog = "A:/programs/Python37-32/python.exe"
   let g:python_host_prog='C:/Python27/python.exe'
   let g:clang_library_path='C:/Program\ Files/LLVM/lib'
   let g:deoplete#sources#rust#racer_binary='C:/Users/lmariscal/.cargo/bin/racer.exe'
@@ -245,7 +247,7 @@ else
 endif
 
 set background=dark
-colorscheme monokai_pro
+colorscheme triplet
 
 setlocal errorformat="%f",\ line\ %l:\ %
 syntax on
