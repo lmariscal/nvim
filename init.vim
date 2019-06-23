@@ -71,6 +71,9 @@ Plug 'wesQ3/vim-windowswap'                             " Swap windows easily
 Plug 'easymotion/vim-easymotion'                        " Easy motion
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
 
+" Tabline (Sometimes I just disable this)
+"Plug 'vim-airline/vim-airline'
+
 " Vim Tools
 "Plug 'Valloric/YouCompleteMe'                                " Autocomplete for vim
 if has('nvim')
@@ -158,6 +161,14 @@ let g:deoplete#enable_at_startup = 1
 let g:neosnippet#snippets_directory = s:path(split(&rtp, ',')[0]) . '/snips/'
 let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
+
+let g:airline_theme = 'dracula'
+let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#branch#enabled = 1
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline_left_alt_sep = '|'
+let g:airline_right_alt_sep = '|'
 
 if s:is_win
   let g:python3_host_prog = "A:/programs/Python37-32/python.exe"
@@ -247,7 +258,7 @@ else
 endif
 
 set background=dark
-colorscheme triplet
+colorscheme dracula
 
 setlocal errorformat="%f",\ line\ %l:\ %
 syntax on
@@ -255,7 +266,7 @@ filetype plugin on
 
 cnoreabbrev ag Ack!
 
-match OverLength /\%81v.\+/
+match StatusLineNC /\%81v.\+/
 fun! JumpToDef()
   if exists('*GotoDefinition_' . &filetype)
     call GotoDefinition_{&filetype}()
@@ -313,7 +324,7 @@ augroup aucommands
   au FileType help wincmd L
   au FileType cpp,c :call CCTypes()
   au BufEnter * :call ChangeCtrlPCmd()
-  au BufEnter * match OverLength /\%81v.\+/
+  au BufEnter * match StatusLineNC /\%81v.\+/
   au BufEnter *.ns set syntax=nim
   au BufEnter *.md setlocal foldexpr=MarkdownLevel()
   au BufEnter *.md setlocal foldmethod=expr

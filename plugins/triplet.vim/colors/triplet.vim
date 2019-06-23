@@ -11,7 +11,6 @@ let g:colors_name = 'triplet'
 
 set background=dark
 
-hi OverLength gui=bold
 hi Normal term=NONE cterm=NONE gui=NONE guifg=#c8b794 guibg=#082627
 
 hi ColorColumn  term=NONE cterm=NONE gui=NONE guifg=NONE guibg=#08267
@@ -22,7 +21,7 @@ hi FoldColumn   term=NONE cterm=NONE gui=NONE guifg=#50bd3f guibg=NONE
 hi Folded       term=NONE cterm=NONE gui=NONE guifg=#50bd3f guibg=NONE
 hi SignColumn   term=NONE cterm=NONE gui=NONE guifg=#50bd3f guibg=NON
 hi SpecialKey   term=NONE cterm=NONE gui=NONE guifg=#50bd3f guibg=NONE
-hi StatusLineNC term=NONE cterm=NONE gui=NONE guifg=#c8b794 guibg=NONE
+hi StatusLineNC term=bold cterm=NONE gui=bold guifg=NONE guibg=NONE
 hi VertSplit    term=NONE cterm=NONE gui=NONE guifg=#c8b794 guibg=NONE
 
 hi CursorColumn term=NONE cterm=NONE gui=NONE guifg=NONE guibg=#303030
