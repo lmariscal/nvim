@@ -12,6 +12,14 @@
 " Functions {{{
 let s:is_win = has('win32')
 
+function! StripTrailingWhitespace()
+  " Only strip if the b:noStripeWhitespace variable isn't set
+  if exists('b:noStripWhitespace')
+    return
+  endif
+  %s/\s\+$//e
+endfun
+
 function! s:trim(str)
   return substitute(a:str, '[\/]\+$', '', '')
 endfunction
@@ -72,7 +80,7 @@ Plug 'easymotion/vim-easymotion'                        " Easy motion
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } " File Explorer
 
 " Tabline (Sometimes I just disable this)
-"Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 
 " Vim Tools
 "Plug 'Valloric/YouCompleteMe'                                " Autocomplete for vim
@@ -85,20 +93,21 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 
-Plug 'Shougo/neosnippet.vim'                                  " Snippet Manager
-Plug 'Shougo/neosnippet-snippets'                             " Default Snippets
-Plug 'Shougo/deoplete-clangx'                                 " Clang Autocomplete
+Plug 'Shougo/neosnippet.vim'         " Snippet Manager
+Plug 'Shougo/neosnippet-snippets'    " Default Snippets
+Plug 'Shougo/deoplete-clangx'        " Clang Autocomplete
 Plug 'sebastianmarkow/deoplete-rust'
-Plug 'ctrlpvim/ctrlp.vim'                                     " Fuzzy Finder
-Plug 'jiangmiao/auto-pairs'                                   " Auto Pair Help
-Plug 'vim-scripts/a.vim'                                      " Quickly toggle .h to .cc
-Plug 'tpope/vim-fugitive'                                     " Git commands
-Plug 'editorconfig/editorconfig-vim'                          " Config for all editors
-Plug 'junegunn/vim-easy-align'                                " Code Alignment
-Plug 'w0rp/ale'                                               " Lint engine for not c++ stuff
+Plug 'ctrlpvim/ctrlp.vim'            " Fuzzy Finder
+Plug 'jiangmiao/auto-pairs'          " Auto Pair Help
+Plug 'vim-scripts/a.vim'             " Quickly toggle .h to .cc
+Plug 'tpope/vim-fugitive'            " Git commands
+Plug 'editorconfig/editorconfig-vim' " Config for all editors
+Plug 'junegunn/vim-easy-align'       " Code Alignment
+Plug 'w0rp/ale'                      " Lint engine for not c++ stuff
+Plug 'tpope/vim-commentary'          " Toggle comments on code
 
 " Custom
-Plug ppath . 'lvimplug'    " Cav Lua Example
+Plug ppath . 'lvimplug'    " A Lua Example
 Plug ppath . 'monokai_pro' " Monokai Pro Theme
 Plug ppath . 'triplet.vim' " Triplet Theme
 call plug#end()
@@ -162,7 +171,7 @@ let g:neosnippet#snippets_directory = s:path(split(&rtp, ',')[0]) . '/snips/'
 let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
 
-let g:airline_theme = 'dracula'
+let g:airline_theme = 'monokai'
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline_left_sep = ' '
@@ -258,7 +267,7 @@ else
 endif
 
 set background=dark
-colorscheme dracula
+colorscheme monokai_pro
 
 setlocal errorformat="%f",\ line\ %l:\ %
 syntax on
@@ -321,19 +330,21 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
   " }}}
 " AutoCMD {{{
 augroup aucommands
-  au FileType help wincmd L
-  au FileType cpp,c :call CCTypes()
   au BufEnter * :call ChangeCtrlPCmd()
   au BufEnter * match StatusLineNC /\%81v.\+/
-  au BufEnter *.ns set syntax=nim
+  au BufEnter *.ns,*.nims,*.nimble set syntax=nim
   au BufEnter *.md setlocal foldexpr=MarkdownLevel()
   au BufEnter *.md setlocal foldmethod=expr
   au BufEnter,BufNewFile *.v,*.f,*.gl set syntax=glsl | set filetype=glsl
-  au BufWritePre * :%s/\s\+$//e
   au VimEnter * iunmap <Leader>ih
   au VimEnter * iunmap <Leader>is
   au VimEnter * iunmap <Leader>ihn
   au BufWinEnter *.md set syntax=markdown | set tw=80
+  au BufWritePre * call StripTrailingWhitespace()
+  au FileType help wincmd L
+  au FileType cpp,c :call CCTypes()
+  au FileType cpp,d setlocal commentstring=//\ %s
+  au FileType markdown,vimwiki let b:noStripWhitespace=1
 
   au VimEnter * set visualbell t_vb=
 augroup END
