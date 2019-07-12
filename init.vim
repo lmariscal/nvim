@@ -68,7 +68,7 @@ Plug 'zah/nim.vim',          { 'for': 'nim' }             " Nim syntax
 Plug 'rust-lang/rust.vim',   { 'for': 'rust' }            " Rust Syntax
 Plug 'leafgarland/typescript-vim', { 'for': 'ts' }
 Plug 'tikhomirov/vim-glsl',  { 'for': 'glsl' }            " GLSL syntax
-Plug 'lervag/vimtex',        { 'for': 'latex' }           " Latex Support
+Plug 'lervag/vimtex'                                      " Latex Support
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' } " Improved cpp high
 
 " UI
@@ -141,6 +141,7 @@ set incsearch
 set hlsearch
 set laststatus=2
 set autoindent
+set spelllang=es_mx,en_gb
 
 set statusline=
 set statusline+=%0*\ %{fugitive#statusline()}            " Git branch
@@ -170,6 +171,7 @@ let g:deoplete#enable_at_startup = 1
 let g:neosnippet#snippets_directory = s:path(split(&rtp, ',')[0]) . '/snips/'
 let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
+let g:tex_flavor = 'latex'
 
 let g:airline_theme = 'monokai'
 let g:airline#extensions#tabline#enabled = 0
@@ -275,6 +277,10 @@ filetype plugin on
 
 cnoreabbrev ag Ack!
 
+call deoplete#custom#var('omni', 'input_patterns', {
+  \ 'tex': g:vimtex#re#deoplete
+\})
+
 match StatusLineNC /\%81v.\+/
 fun! JumpToDef()
   if exists('*GotoDefinition_' . &filetype)
@@ -332,20 +338,21 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 augroup aucommands
   au BufEnter * :call ChangeCtrlPCmd()
   au BufEnter * match StatusLineNC /\%81v.\+/
-  au BufEnter *.ns,*.nims,*.nimble set syntax=nim
+  au BufEnter *.nims,*.nimble set syntax=nim
   au BufEnter *.md setlocal foldexpr=MarkdownLevel()
   au BufEnter *.md setlocal foldmethod=expr
-  au BufEnter,BufNewFile *.v,*.f,*.gl set syntax=glsl | set filetype=glsl
+  au BufEnter,BufNewFile *.vert,*.frag set syntax=glsl | set filetype=glsl
   au VimEnter * iunmap <Leader>ih
   au VimEnter * iunmap <Leader>is
   au VimEnter * iunmap <Leader>ihn
   au BufWinEnter *.md set syntax=markdown | set tw=80
+  au BufWinEnter *.tex,*.md set spell
   au BufWritePre * call StripTrailingWhitespace()
+  "au BufWritePost *.tex :silent !latexmk -xelatex %
   au FileType help wincmd L
   au FileType cpp,c :call CCTypes()
-  au FileType cpp,d setlocal commentstring=//\ %s
+  au FileType cpp,glsl,c setlocal commentstring=//\ %s
   au FileType markdown,vimwiki let b:noStripWhitespace=1
-
   au VimEnter * set visualbell t_vb=
 augroup END
 "}}}
