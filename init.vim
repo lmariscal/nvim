@@ -96,7 +96,7 @@ let g:deoplete#enable_at_startup = 1
 Plug 'Shougo/neosnippet.vim'         " Snippet Manager
 Plug 'Shougo/neosnippet-snippets'    " Default Snippets
 Plug 'Shougo/deoplete-clangx'        " Clang Autocomplete
-Plug 'sebastianmarkow/deoplete-rust'
+Plug 'sebastianmarkow/deoplete-rust' " Rust Autocomplete
 Plug 'ctrlpvim/ctrlp.vim'            " Fuzzy Finder
 Plug 'jiangmiao/auto-pairs'          " Auto Pair Help
 Plug 'vim-scripts/a.vim'             " Quickly toggle .h to .cc
@@ -182,11 +182,11 @@ let g:airline_left_alt_sep = '|'
 let g:airline_right_alt_sep = '|'
 
 if s:is_win
-  let g:python3_host_prog = "A:/programs/Python37-32/python.exe"
+  let g:python3_host_prog = "C:/Users/root/AppData/Local/Programs/Python/Python37/python.exe"
   let g:python_host_prog='C:/Python27/python.exe'
   let g:clang_library_path='C:/Program\ Files/LLVM/lib'
-  let g:deoplete#sources#rust#racer_binary='C:/Users/lmariscal/.cargo/bin/racer.exe'
-  let g:deoplete#sources#rust#rust_source_path='A:/dev/rust/src'
+  let g:deoplete#sources#rust#racer_binary='C:/Users/root/.cargo/bin/racer.exe'
+  let g:deoplete#sources#rust#rust_source_path='C:/Users/root/dev/rust/src'
 endif
 
 let g:EasyMotion_do_mapping = 0
@@ -318,6 +318,8 @@ nmap s <Plug>(easymotion-s2)
 nmap f <Plug>(easymotion-fl)
 nmap F <Plug>(easymotion-Fl)
 nmap ga <Plug>(EasyAlign)
+nmap <leader>k <plug>DeopleteRustShowDocumentation
+nmap <leader>gd <plug>DeopleteRustGoToDefinitionVSplit
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
@@ -337,14 +339,18 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 " AutoCMD {{{
 augroup aucommands
   au BufEnter * :call ChangeCtrlPCmd()
-  au BufEnter * match StatusLineNC /\%81v.\+/
-  au BufEnter *.nims,*.nimble set syntax=nim
+  au BufEnter *.md match StatusLineNC /\%81v.\+/
   au BufEnter *.md setlocal foldexpr=MarkdownLevel()
   au BufEnter *.md setlocal foldmethod=expr
+  au BufEnter *.nim match StatusLineNC /\%81v.\+/
+  au BufEnter * match StatusLineNC /\%100v.\+/
+  au BufEnter *.nims,*.nimble set syntax=nim
   au BufEnter,BufNewFile *.vert,*.frag set syntax=glsl | set filetype=glsl
+  "au BufWritePre * :%s/\s\+$//e
   au VimEnter * iunmap <Leader>ih
   au VimEnter * iunmap <Leader>is
   au VimEnter * iunmap <Leader>ihn
+  au VimEnter * set visualbell t_vb=
   au BufWinEnter *.md set syntax=markdown | set tw=80
   au BufWinEnter *.tex,*.md set spell
   au BufWritePre * call StripTrailingWhitespace()
@@ -353,6 +359,6 @@ augroup aucommands
   au FileType cpp,c :call CCTypes()
   au FileType cpp,glsl,c setlocal commentstring=//\ %s
   au FileType markdown,vimwiki let b:noStripWhitespace=1
-  au VimEnter * set visualbell t_vb=
+  au InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 augroup END
 "}}}
