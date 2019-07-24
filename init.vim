@@ -2,9 +2,9 @@
 "
 " Author: Leonardo Mariscal
 " Source: https://ldmd.mx/nvim
-" Description: My vimrc for neovim, so init.vim. Grab whatever you want
+" Description: My vimrc for neovim, so init.vim. Grab whatever you want!
 " Hack: If you have trouble in linux run "dos2unix init.vim"
-" Website: http://lmariscal.com/
+" Website: https://www.ldmd.mx/
 "
 " Resources:
 "   vim-plug: https://github.com/junegunn/vim-plug
@@ -181,12 +181,24 @@ let g:airline_right_sep = ' '
 let g:airline_left_alt_sep = '|'
 let g:airline_right_alt_sep = '|'
 
+let hostname = substitute(system('hostname'), '\n', '', '')
+
 if s:is_win
-  let g:python3_host_prog = "C:/Users/root/AppData/Local/Programs/Python/Python37/python.exe"
-  let g:python_host_prog='C:/Python27/python.exe'
-  let g:clang_library_path='C:/Program\ Files/LLVM/lib'
-  let g:deoplete#sources#rust#racer_binary='C:/Users/root/.cargo/bin/racer.exe'
-  let g:deoplete#sources#rust#rust_source_path='C:/Users/root/dev/rust/src'
+  if hostname == "Tabula"
+    let g:python3_host_prog = "C:/Users/root/AppData/Local/Programs/Python/Python37/python.exe"
+    let g:python_host_prog='C:/Python27/python.exe'
+    let g:clang_library_path='C:/Program\ Files/LLVM/lib'
+    let g:deoplete#sources#rust#racer_binary='C:/Users/root/.cargo/bin/racer.exe'
+    let g:deoplete#sources#rust#rust_source_path='C:/Users/root/dev/rust/src'
+  elseif hostname == "Ulbert"
+    let g:python3_host_prog = "C:/Users/root/AppData/Local/Programs/Python/Python37/python.exe"
+    let g:python_host_prog='C:/Python27/python.exe'
+    let g:clang_library_path='C:/Program\ Files/LLVM/lib'
+    let g:deoplete#sources#rust#racer_binary='C:/Users/root/.cargo/bin/racer.exe'
+    let g:deoplete#sources#rust#rust_source_path='C:/Users/root/dev/rust/src'
+  else
+    echoerr 'Not a know host, python, clang and deoplete will not work!'
+  endif
 endif
 
 let g:EasyMotion_do_mapping = 0
@@ -254,20 +266,10 @@ if g:os ==# 'Darwin' || g:os ==# 'Mac'
 elseif g:os ==# 'Linux'
   " Nothing
 endif
-let g:ale_cs_mcsc_assemblies = [
-\ '/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll',
-\ '/Users/cavariux/dev/tanquesitos/obj/Debug',
-\]
 
 let g:ackprg = 'ag --vimgrep'
 " }}}
 " Options {{{
-if s:is_win
-  let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
-else
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-endif
-
 set background=dark
 colorscheme monokai_pro
 
