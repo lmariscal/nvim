@@ -173,7 +173,7 @@ let g:racer_cmd = ""
 let g:rustfmt_autosave = 0
 let g:tex_flavor = 'latex'
 
-let g:airline_theme = 'monokai'
+let g:airline_theme = 'dracula'
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline_left_sep = ' '
@@ -271,7 +271,7 @@ let g:ackprg = 'ag --vimgrep'
 " }}}
 " Options {{{
 set background=dark
-colorscheme monokai_pro
+colorscheme dracula
 
 setlocal errorformat="%f",\ line\ %l:\ %
 syntax on
@@ -362,5 +362,6 @@ augroup aucommands
   au FileType cpp,glsl,c setlocal commentstring=//\ %s
   au FileType markdown,vimwiki let b:noStripWhitespace=1
   au InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+  au VimLeave * set guicursor=a:hor20-blinkon0
 augroup END
 "}}}
