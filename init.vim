@@ -18,25 +18,25 @@ augroup aucommands
     au BufEnter,BufNewFile *.slang set filetype=shaderslang
 augroup END
 
-function! IsWSL()
-    if has("unix")
-        let lines = readfile("/proc/version")
-        if lines[0] =~ "Microsoft"
-            return 1
-        endif
-    endif
-    return 0
-endfunction
-
-if IsWSL()
-    let g:clipboard = {
-              \   'name': 'win32yank-wsl',
-              \   'copy': {
-              \      '+': 'win32yank.exe -i --crlf',
-              \    },
-              \   'paste': {
-              \      '+': 'win32yank.exe -o --lf',
-              \   },
-              \   'cache_enabled': 0,
-              \ }
-endif
+"function! IsWSL()
+"    if has("unix")
+"        let lines = readfile("/proc/version")
+"        if lines[0] =~ "Microsoft"
+"            return 1
+"        endif
+"    endif
+"    return 0
+"endfunction
+"
+"if IsWSL()
+"    let g:clipboard = {
+"              \   'name': 'win32yank-wsl',
+"              \   'copy': {
+"              \      '+': 'win32yank.exe -i --crlf',
+"              \    },
+"              \   'paste': {
+"              \      '+': 'win32yank.exe -o --lf',
+"              \   },
+"              \   'cache_enabled': 0,
+"              \ }
+"endif

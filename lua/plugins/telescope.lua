@@ -4,7 +4,10 @@ return {
     branch = "0.1.x",
     keys = {
         { "bl", "<cmd>Telescope buffers theme=get_dropdown<cr>", desc = "Open buffer selection" },
-        { "<C-p>", "<cmd>Telescope projects theme=get_dropdown<cr>", desc = "Open project selection" }
+        { "<C-p>", "<cmd>Telescope projects theme=get_dropdown<cr>", desc = "Open project selection" },
+        { "<leader>f", "<cmd>Telescope live_grep theme=get_dropdown<cr>", desc = "Open live grep" },
+        { "<C-M-q>", "<cmd>Telescope treesitter theme=get_dropdown<cr>", desc = "Open treesitter selection" },
+        { "z=", "<cmd>Telescope spell_suggest<cr>", desc = "Open spell_suggest" },
     },
     config = function()
         local actions = require("telescope.actions")
