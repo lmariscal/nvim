@@ -16,6 +16,8 @@ augroup aucommands
     au BufEnter * lua require("utils").telescope_if_git()
     au BufEnter,BufNewFile *.vert,*.frag set syntax=glsl | set filetype=glsl
     au BufEnter,BufNewFile *.slang set filetype=shaderslang
+
+    au BufWritePre * lua vim.lsp.buf.format({ async = false })
 augroup END
 
 "function! IsWSL()
