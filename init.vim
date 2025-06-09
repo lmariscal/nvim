@@ -11,7 +11,6 @@ augroup aucommands
     au FileType cpp,glsl,c,rust,cs match StatusLineNC /\%120v.\+/
     au FileType nim match StatusLineNC /\%100v.\+/
     au FileType markdown,text match StatusLineNC /\%120v.\+/
-    au FileType jai compiler jai
 
     au BufEnter * lua require("utils").telescope_if_git()
     au BufEnter,BufNewFile *.vert,*.frag set syntax=glsl | set filetype=glsl

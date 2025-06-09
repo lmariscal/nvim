@@ -29,7 +29,11 @@ return {
                     },
                     checkOnSave = false
                 }
-            }
+            },
+            on_attach = function(client, bufnr)
+                -- Additional safeguard: Disable semantic tokens on attach
+                client.server_capabilities.semanticTokensProvider = nil
+            end
         })
 
         lspconfig.basedpyright.setup {
