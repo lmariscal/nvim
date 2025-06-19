@@ -20,6 +20,7 @@ return {
                     i = {
                         ["<C-[>"] = actions.close,
                         ["<esc>"] = actions.close,
+                        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                     },
                 },
                 prompt_prefix = " ",
