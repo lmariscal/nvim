@@ -1,5 +1,6 @@
 local utils = {}
 
+--- Map a keybind to the parameters specified
 function utils.map(mode, lhs, rhs, opts)
     local options = { noremap = true }
     if opts then
@@ -26,6 +27,14 @@ function utils.telescope_if_git()
     else
         utils.map("n", "<C-q>", "<cmd>Telescope find_files<cr>")
     end
+end
+
+--- Clear the terminal's buffer
+function utils.clear_terminal()
+    vim.bo.scrollback = 1
+    vim.api.nvim_feedkeys("clear\r", "n", true)
+    vim.cmd("sleep 100m")
+    vim.bo.scrollback = 10000
 end
 
 return utils
