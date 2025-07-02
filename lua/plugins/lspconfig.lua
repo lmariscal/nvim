@@ -2,8 +2,8 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     dependencies = {
-        { "hrsh7th/cmp-nvim-lsp", opts = { } },
-        { "hrsh7th/nvim-cmp", opts = { } },
+        { "hrsh7th/cmp-nvim-lsp", opts = {} },
+        { "hrsh7th/nvim-cmp",     opts = {} },
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "nvim-lua/lsp-status.nvim"
@@ -36,7 +36,43 @@ return {
             end
         })
 
-        lspconfig.basedpyright.setup {
+        lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            on_init = function(client)
+                if client.workspace_folders then
+                    local path = client.workspace_folders[1].name
+                    if
+                        path ~= vim.fn.stdpath('config')
+                        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                    then
+                        return
+                    end
+                end
+
+                client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                    runtime = {
+                        version = 'LuaJIT',
+                        path = {
+                            'lua/?.lua',
+                            'lua/?/init.lua',
+                        },
+                    },
+                    -- Make the server aware of Neovim runtime files
+                    workspace = {
+                        checkThirdParty = false,
+                        library = {
+                            vim.env.VIMRUNTIME
+                        }
+                    }
+                })
+            end,
+            settings = {
+                Lua = {}
+            }
+        })
+
+        lspconfig.basedpyright.setup({
+            capabilities = capabilities,
             settings = {
                 basedpyright = {
                     analysis = {
@@ -55,7 +91,7 @@ return {
                     }
                 }
             }
-        }
+        })
 
         --
 
@@ -63,7 +99,7 @@ return {
         cmp.setup {
             mapping = cmp.mapping.preset.insert({
                 ["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Up
-                ["<C-d>"] = cmp.mapping.scroll_docs(4), -- Down
+                ["<C-d>"] = cmp.mapping.scroll_docs(4),  -- Down
                 ["<CR>"] = cmp.mapping.confirm({ select = true, }),
             }),
             sources = {
