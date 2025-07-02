@@ -21,14 +21,14 @@ opt.autochdir = false
 opt.scl = "yes"
 opt.completeopt = "menuone,noinsert,noselect"
 opt.spelllang = "en_gb"
-opt.fileencoding="utf-8"
-opt.makeprg="just" -- Pretty much the only build tool I use directly
+opt.fileencoding = "utf-8"
+opt.makeprg = "just" -- Pretty much the only build tool I use directly
 
 -- Commands
 
-cmd("colorscheme monokai-pro")
+vim.cmd.colorscheme("monokai-pro")
 
-vim.diagnostic.disable()
+vim.diagnostic.enable(false)
 
 -- Autocmds
 
