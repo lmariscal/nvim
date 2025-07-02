@@ -8,6 +8,9 @@ return {
         { "-", "<CMD>Oil<CR>", desc = "Open parent directory" }
     },
     opts = {
+        win_options = {
+            signcolumn = "yes:2",
+        },
         columns = {
             "icon",
             "permissions",

@@ -31,4 +31,5 @@ require("lazy").setup({
     install = { colorscheme = { "monokai-pro" } },
     -- automatically check for plugin updates
     checker = { enabled = true },
+    dev = { path = "~/dev/lmariscal" }
 })
