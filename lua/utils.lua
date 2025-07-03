@@ -32,7 +32,8 @@ end
 --- Clear the terminal's buffer
 function utils.clear_terminal()
     vim.bo.scrollback = 1
-    vim.api.nvim_feedkeys("clear\r", "n", true)
+    local ctrl_c = vim.api.nvim_replace_termcodes("<C-c>", true, false, true)
+    vim.api.nvim_feedkeys(ctrl_c .. "clear\r", "n", true)
     vim.cmd("sleep 100m")
     vim.bo.scrollback = 10000
 end
