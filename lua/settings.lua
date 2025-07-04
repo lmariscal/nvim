@@ -6,8 +6,6 @@ local g = vim.g
 
 opt.expandtab = true
 opt.termguicolors = true
-opt.number = true
-opt.relativenumber = true
 opt.list = true
 opt.hidden = true
 opt.ignorecase = true
@@ -23,6 +21,9 @@ opt.completeopt = "menuone,noinsert,noselect"
 opt.spelllang = "en_gb"
 opt.fileencoding = "utf-8"
 opt.makeprg = "just" -- Pretty much the only build tool I use directly
+
+opt.number = false
+opt.relativenumber = false
 
 -- Commands
 

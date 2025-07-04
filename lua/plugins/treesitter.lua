@@ -10,7 +10,7 @@ return {
             {
                 ensure_installed = {
                     "lua", "c", "cpp", "vim", "python", "javascript", "scheme", "typescript", "wgsl", "json",
-                    "c_sharp", "rust", "slang", "nim", "proto", "janet_simple" },
+                    "c_sharp", "rust", "slang", "nim", "proto", "janet_simple", "go" },
                 highlight = { enable = true },
                 folding = { enable = true },
                 rainbow = { enable = true }

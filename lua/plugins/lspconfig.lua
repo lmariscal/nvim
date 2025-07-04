@@ -12,7 +12,7 @@ return {
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
         local lspconfig = require('lspconfig')
 
-        local lsp_servers = { "ts_ls", "ruff", "clangd", "slangd" }
+        local lsp_servers = { "ts_ls", "ruff", "clangd", "slangd", "gopls" }
 
         for _, lsp in ipairs(lsp_servers) do
             lspconfig[lsp].setup({
