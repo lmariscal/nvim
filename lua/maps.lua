@@ -16,5 +16,5 @@ utils.map("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>")
 utils.map("n", "<C-S-l>", "<cmd>lua vim.lsp.buf.format({ async = false })<cr>")
 -- <C-o> is used to go back in the jump list
 
-utils.map("t", "<C-[>", "<C-\\><C-n>", { desc = "Actually defocus terminal on Esc" })
+-- utils.map("t", "<C-[>", "<C-\\><C-n>", { desc = "Actually defocus terminal on Esc" }) -- Disabled as I'm using vim mode with fish, and it conflicts with ESC
 utils.map("t", "<C-l>", "<cmd>lua require('utils').clear_terminal()<cr>", { desc = "Clear terminal and scrollback" })
