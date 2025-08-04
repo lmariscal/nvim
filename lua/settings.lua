@@ -39,3 +39,6 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.commentstring = "// %s"
     end,
 })
+
+-- Tired of accidentally mistyping this command
+vim.api.nvim_create_user_command('Noh', 'noh', {})
