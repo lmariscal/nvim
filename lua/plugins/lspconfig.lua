@@ -10,17 +10,14 @@ return {
     },
     config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        local lspconfig = require('lspconfig')
 
-        local lsp_servers = { "ts_ls", "ruff", "clangd", "slangd", "gopls" }
+        local lsp_servers = { "ts_ls", "ruff", "ty", "clangd", "slangd", "gopls", "protols" }
 
-        for _, lsp in ipairs(lsp_servers) do
-            lspconfig[lsp].setup({
-                capabilities = capabilities,
-            })
-        end
+        vim.iter(lsp_servers):each(function(lsp)
+            vim.lsp.enable(lsp, { capabilities = capabilities })
+        end)
 
-        lspconfig.rust_analyzer.setup({
+        vim.lsp.enable("rust_analyzer", {
             capabilities = capabilities,
             settings = {
                 ["rust-analyzer"] = {
@@ -36,25 +33,25 @@ return {
             end
         })
 
-        lspconfig.lua_ls.setup({
+        vim.lsp.enable("lua_ls", {
             capabilities = capabilities,
             on_init = function(client)
                 if client.workspace_folders then
                     local path = client.workspace_folders[1].name
                     if
-                        path ~= vim.fn.stdpath('config')
-                        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                        path ~= vim.fn.stdpath("config")
+                        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
                     then
                         return
                     end
                 end
 
-                client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
                     runtime = {
-                        version = 'LuaJIT',
+                        version = "LuaJIT",
                         path = {
-                            'lua/?.lua',
-                            'lua/?/init.lua',
+                            "lua/?.lua",
+                            "lua/?/init.lua",
                         },
                     },
                     -- Make the server aware of Neovim runtime files
@@ -71,7 +68,7 @@ return {
             }
         })
 
-        lspconfig.basedpyright.setup({
+        vim.lsp.enable("basedpyright", {
             capabilities = capabilities,
             settings = {
                 basedpyright = {
@@ -104,6 +101,15 @@ return {
             }),
             sources = {
                 { name = "nvim_lsp" },
+                {
+                    name = 'path',
+                    option = {
+                        pathMappings = {
+                            ['@'] = '${folder}/src',
+                        },
+                    },
+                },
+                { name = 'buffer' },
             },
         }
     end

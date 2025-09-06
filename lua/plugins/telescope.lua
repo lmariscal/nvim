@@ -3,14 +3,21 @@ return {
     lazy = false,
     branch = "0.1.x",
     keys = {
-        { "bl",        "<cmd>Telescope buffers theme=get_dropdown<cr>",    desc = "Open buffer selection" },
-        { "<C-S-p>",   "<cmd>Telescope projects theme=get_dropdown<cr>",   desc = "Open project selection" },
-        { "<leader>f", "<cmd>Telescope live_grep theme=get_dropdown<cr>",  desc = "Open live grep" },
-        { "<C-S-q>",   "<cmd>Telescope treesitter theme=get_dropdown<cr>", desc = "Open treesitter selection" },
-        { "z=",        "<cmd>Telescope spell_suggest<cr>",                 desc = "Open spell_suggest" },
+        { "bl",        "<cmd>Telescope buffers theme=get_dropdown<cr>",                            desc = "Open buffer selection" },
+        { "<C-S-p>",   "<cmd>Telescope projects theme=get_dropdown<cr>",                           desc = "Open project selection" },
+        { "<leader>f", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Open live grep" },
+        { "<C-S-q>",   "<cmd>Telescope treesitter theme=get_dropdown<cr>",                         desc = "Open treesitter selection" },
+        { "z=",        "<cmd>Telescope spell_suggest<cr>",                                         desc = "Open spell_suggest" },
+    },
+    dependencies = {
+        {
+            "nvim-telescope/telescope-live-grep-args.nvim",
+            version = "^1.0.0",
+        },
     },
     config = function()
         local actions = require("telescope.actions")
+        local lga_actions = require("telescope-live-grep-args.actions")
         require("telescope").load_extension("projects")
         require("telescope").load_extension("notify")
         require("telescope").setup({
@@ -71,7 +78,22 @@ return {
                 spell_suggest = {
                     theme = "dropdown"
                 }
+            },
+            extensions = {
+                live_grep_args = {
+                    auto_quoting = true, -- enable/disable auto-quoting
+                    mappings = {
+                        i = {
+                            ["<C-k>"] = lga_actions.quote_prompt(),
+                            ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                            -- freeze the current list and start a fuzzy search in the frozen list
+                            ["<C-space>"] = lga_actions.to_fuzzy_refine,
+                        },
+                    },
+                    theme = "dropdown",
+                }
             }
+
         })
     end
 }

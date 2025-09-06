@@ -16,7 +16,7 @@ augroup aucommands
     au BufEnter,BufNewFile *.vert,*.frag set syntax=glsl | set filetype=glsl
     au BufEnter,BufNewFile *.slang set filetype=shaderslang
 
-    au BufWritePre * if index(['proto'], &filetype) < 0 | lua vim.lsp.buf.format({ async = false })
+    au BufWritePre * lua vim.lsp.buf.format({ async = false })
 augroup END
 
 "function! IsWSL()

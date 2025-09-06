@@ -23,9 +23,9 @@ function utils.telescope_if_git()
     end
 
     if use_git_files then
-        utils.map("n", "<C-q>", "<cmd>Telescope git_files<cr>")
+        utils.map("n", "<C-q>", ":lua require('fff').find_in_git_root()<cr>")
     else
-        utils.map("n", "<C-q>", "<cmd>Telescope find_files<cr>")
+        utils.map("n", "<C-q>", ":lua require('fff').find_files()<cr>")
     end
 end
 
