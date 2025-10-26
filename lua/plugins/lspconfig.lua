@@ -15,7 +15,8 @@ return {
         local lsp_servers = { "ts_ls", "ruff", "ty", "clangd", "slangd", "gopls", "protols", "basedpyright" }
 
         vim.iter(lsp_servers):each(function(lsp)
-            vim.lsp.enable(lsp, { capabilities = capabilities })
+            vim.lsp.config(lsp, { capabilities = capabilities })
+            vim.lsp.enable(lsp)
         end)
 
         vim.lsp.config("rust_analyzer", {
