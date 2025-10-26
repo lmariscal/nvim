@@ -26,7 +26,7 @@ return {
                     diagnostics = {
                         enable = false,
                     },
-                    checkOnSave = true,
+                    checkOnSave = false,
                     inlayHints = {
                         enable = false,
                     },
