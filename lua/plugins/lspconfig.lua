@@ -10,21 +10,45 @@ return {
     },
     config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        local lspconfig = require('lspconfig')
 
-        local lsp_servers = { "ts_ls", "ruff", "ty", "clangd", "slangd", "gopls", "protols" }
+        local lsp_servers = { "ts_ls", "ruff", "ty", "clangd", "slangd", "gopls", "protols", "basedpyright" }
 
         vim.iter(lsp_servers):each(function(lsp)
             vim.lsp.enable(lsp, { capabilities = capabilities })
         end)
 
-        vim.lsp.enable("rust_analyzer", {
+        vim.lsp.config("rust_analyzer", {
             capabilities = capabilities,
             settings = {
                 ["rust-analyzer"] = {
                     diagnostics = {
                         enable = false,
                     },
-                    checkOnSave = false
+                    checkOnSave = true,
+                    inlayHints = {
+                        enable = false,
+                    },
+                    check = {
+                        overrideCommand = {
+                            "cargo-subspace",
+                            "clippy",
+                            "$saved_file",
+                        },
+                    },
+                    workspace = {
+                        discoverConfig = {
+                            command = {
+                                "cargo-subspace",
+                                "discover",
+                                "{arg}",
+                            },
+                            progressLabel = "cargo-subspace",
+                            filesToWatch = {
+                                "Cargo.toml",
+                            },
+                        },
+                    },
                 }
             },
             on_attach = function(client, bufnr)
@@ -32,8 +56,9 @@ return {
                 client.server_capabilities.semanticTokensProvider = nil
             end
         })
+        vim.lsp.enable("rust_analyzer")
 
-        vim.lsp.enable("lua_ls", {
+        vim.lsp.config("lua_ls", {
             capabilities = capabilities,
             on_init = function(client)
                 if client.workspace_folders then
@@ -67,28 +92,7 @@ return {
                 Lua = {}
             }
         })
-
-        vim.lsp.enable("basedpyright", {
-            capabilities = capabilities,
-            settings = {
-                basedpyright = {
-                    analysis = {
-                        diagnosticSeverityOverrides = {
-                            reportAny = false,
-                            reportUnusedCallResult = false,
-                            reportMissingTypeArgument = false,
-                            reportMissingParameterType = false,
-                            reportUnknownArgumentType = false,
-                            reportUnknownLambdaType = false,
-                            reportUnknownMemberType = false,
-                            reportUnknownParameterType = false,
-                            reportUnknownVariableType = false,
-                            reportMissingTypeStubs = false
-                        }
-                    }
-                }
-            }
-        })
+        vim.lsp.enable("lua_ls")
 
         --
 
