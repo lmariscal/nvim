@@ -32,22 +32,9 @@ return {
                     },
                     check = {
                         overrideCommand = {
-                            "cargo-subspace",
+                            "cargo",
                             "clippy",
                             "$saved_file",
-                        },
-                    },
-                    workspace = {
-                        discoverConfig = {
-                            command = {
-                                "cargo-subspace",
-                                "discover",
-                                "{arg}",
-                            },
-                            progressLabel = "cargo-subspace",
-                            filesToWatch = {
-                                "Cargo.toml",
-                            },
                         },
                     },
                 }

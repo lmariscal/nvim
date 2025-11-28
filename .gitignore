@@ -1,2 +1,3 @@
 # My own personal plugin, don't get excited people
 lua/plugins/grok.lua
+lua/plugins/avante.lua
