@@ -4,7 +4,8 @@ return {
     config = function()
         require("project_nvim").setup({
             detection_methods = { "lsp", "pattern" },
-            silent_chdir = false
+            silent_chdir = false,
+            manual_mode = true
         })
     end
 }
