@@ -1,3 +1,16 @@
+-- At the top of your config function, after requiring modules
+local jj_cache = {} -- Cache table: { cwd = output }
+
+-- Set up autocmds to invalidate cache
+vim.api.nvim_create_augroup("LualineJjCache", { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePost", "DirChanged", "BufNewFile" }, {
+    group = "LualineJjCache",
+    callback = function()
+        local cwd = vim.fn.getcwd()
+        jj_cache[cwd] = nil -- Invalidate cache for this dir
+    end,
+})
+
 return {
     "hoob3rt/lualine.nvim",
     lazy = false,
@@ -8,20 +21,6 @@ return {
 
         lsp_status.register_progress()
 
-        -- Sonokai maia
-        -- local colors = {
-        --   bg       = "#3a444b",
-        --   fg       = "#e1e2e3",
-        --   yellow   = "#e3d367",
-        --   cyan     = "#008080",
-        --   darkblue = "#7cd5f1",
-        --   green    = "#9cd57b",
-        --   orange   = "#f3a96a",
-        --   violet   = "#baa0f8",
-        --   magenta  = "#c678dd",
-        --   blue     = "#78cee9",
-        --   red      = "#f76c7c"
-        -- }
         -- Everforest Hard
         local colors = {
             bg       = "#3c474d",
@@ -42,8 +41,17 @@ return {
             hide_in_width = function() return vim.fn.winwidth(0) > 80 end,
             check_git_workspace = function()
                 local filepath = vim.fn.expand("%:p:h")
+                local jjdir = vim.fn.finddir(".jj", filepath .. ";")
+                if jjdir and #jjdir > 0 and #jjdir < #filepath then
+                    return false
+                end
                 local gitdir = vim.fn.finddir(".git", filepath .. ";")
                 return gitdir and #gitdir > 0 and #gitdir < #filepath
+            end,
+            check_jj_workspace = function()
+                local filepath = vim.fn.expand("%:p:h")
+                local jjdir = vim.fn.finddir(".jj", filepath .. ";")
+                return jjdir and #jjdir > 0 and #jjdir < #filepath
             end
         }
 
@@ -56,7 +64,7 @@ return {
                 -- Disable sections and component separators
                 component_separators = "",
                 section_separators = "",
-                theme = "monokai-pro"
+                -- theme = "monokai-pro"
                 -- theme = {
                 --   -- We are going to use lualine_c an lualine_x as left and
                 --   -- right section. Both are highlighted by c theme .  So we
@@ -114,44 +122,55 @@ return {
             table.insert(config.sections.lualine_x, component)
         end
 
-        -- ins_left {
-        --   function()
-        --     -- auto change color according to neovims mode
-        --     local mode_color = {
-        --       n = colors.cyan,
-        --       i = colors.green,
-        --       v = colors.blue,
-        --       [""] = colors.blue,
-        --       V = colors.blue,
-        --       c = colors.violet,
-        --       no = colors.cyan,
-        --       s = colors.orange,
-        --       S = colors.orange,
-        --       [""] = colors.orange,
-        --       ic = colors.yellow,
-        --       R = colors.red,
-        --       Rv = colors.red,
-        --       cv = colors.cyan,
-        --       ce = colors.cyan,
-        --       r = colors.magenta,
-        --       rm = colors.magenta,
-        --       ["r?"] = colors.magenta,
-        --       ["!"] = colors.cyan,
-        --       t = colors.cyan
-        --     }
-        --     vim.api.nvim_command(
-        --         -- "hi! LualineMode guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg)
-        --         "hi! LualineMode guifg=" .. mode_color[vim.fn.mode()])
-        --     return "▊"
-        --   end,
-        --   color = "LualineMode", -- Sets highlighting of component
-        --   left_padding = 0 -- We don"t need space before this
-        -- }
-
         ins_left {
             "branch",
             icon = "",
-            condition = conditions.check_git_workspace,
+            cond = conditions.check_git_workspace,
+            color = { fg = colors.cyan, gui = "bold" }
+        }
+
+        ins_left {
+            function()
+                local cwd = vim.fn.getcwd()
+                if not jj_cache[cwd] then
+                    local output = vim.fn.system([[
+                        jj log 2>/dev/null --no-graph --ignore-working-copy --color=never --revisions @ \
+                        --template '
+                            surround(
+                                "(",
+                                ")",
+                                separate(
+                                    " ",
+                                    bookmarks.join(", "),
+                                    change_id.shortest(),
+                                    if(conflict, label("conflict", "×")),
+                                    if(divergent, label("divergent", "??")),
+                                    if(hidden, label("hidden prefix", "(hidden)")),
+                                    if(immutable, label("node immutable", "◆")),
+                                    coalesce(
+                                        if(
+                                            empty,
+                                            coalesce(
+                                                if(
+                                                    parents.len() > 1,
+                                                    label("empty", "(merged)"),
+                                                ),
+                                                label("empty", "(empty)"),
+                                            ),
+                                        ),
+                                        label("description placeholder", "*")
+                                    ),
+                                )
+                            )
+                        '
+                    ]])
+                    output = output:gsub('%s*$', '')
+                    jj_cache[cwd] = output
+                end
+                return jj_cache[cwd]
+            end,
+            icon = '',
+            cond = conditions.check_jj_workspace,
             color = { fg = colors.cyan, gui = "bold" }
         }
 
@@ -162,12 +181,12 @@ return {
             color_added = colors.green,
             color_modified = colors.orange,
             color_removed = colors.red,
-            condition = conditions.hide_in_width
+            cond = conditions.hide_in_width
         }
 
         ins_left {
             "filename",
-            condition = conditions.buffer_not_empty,
+            cond = conditions.buffer_not_empty,
             color = { fg = colors.fg, gui = "bold" }
         }
 
@@ -212,6 +231,14 @@ return {
                     separator = ' -> '
                 })
             end,
+            cond = function()
+                local status = treesitter.statusline({
+                    indicator_size = 100,
+                    type_patterns = { 'class', 'function', 'method' },
+                    separator = ' -> '
+                })
+                return status ~= nil and tostring(status) ~= "vim.NIL"
+            end,
             color = { fg = colors.fg, gui = "bold" }
         }
 
@@ -253,7 +280,7 @@ return {
                 if string.len(file) == 0 then return "" end
                 return format_file_size(file)
             end,
-            condition = conditions.buffer_not_empty
+            cond = conditions.buffer_not_empty
         }
 
         ins_right { "location" }

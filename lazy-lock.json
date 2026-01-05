@@ -8,7 +8,7 @@
   "fff.nvim": { "branch": "main", "commit": "f6af8353c3cb02ddde1588f24f27ff8b3a4037cf" },
   "hop.nvim": { "branch": "master", "commit": "707049feaca9ae65abb3696eff9aefc7879e66aa" },
   "jai.vim": { "branch": "master", "commit": "699e27482d42e7ee62823db0196532c8b32971c0" },
-  "jj.nvim": { "branch": "main", "commit": "8c6a6568101c43a1c8046537e41583e353f77d77" },
+  "jj.nvim": { "branch": "main", "commit": "ca75a50858774f7ae36dfc1afd66f4b5701432b1" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lsp-status.nvim": { "branch": "master", "commit": "54f48eb5017632d81d0fd40112065f1d062d0629" },
   "lualine.nvim": { "branch": "master", "commit": "47f91c416daef12db467145e16bed5bbfe00add8" },
