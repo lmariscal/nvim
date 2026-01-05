@@ -181,7 +181,7 @@ return {
             color_added = colors.green,
             color_modified = colors.orange,
             color_removed = colors.red,
-            cond = conditions.hide_in_width
+            cond = function() return conditions.hide_in_width() and conditions.check_git_workspace() end
         }
 
         ins_left {
