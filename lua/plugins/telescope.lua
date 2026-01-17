@@ -3,11 +3,11 @@ return {
     lazy = false,
     branch = "0.1.x",
     keys = {
-        { "bl",        "<cmd>Telescope buffers theme=get_dropdown<cr>",                            desc = "Open buffer selection" },
-        { "<C-S-p>",   "<cmd>Telescope projects theme=get_dropdown<cr>",                           desc = "Open project selection" },
-        { "<leader>f", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Open live grep" },
-        { "<C-S-q>",   "<cmd>Telescope treesitter theme=get_dropdown<cr>",                         desc = "Open treesitter selection" },
-        { "z=",        "<cmd>Telescope spell_suggest<cr>",                                         desc = "Open spell_suggest" },
+        { "bl",      "<cmd>Telescope buffers theme=get_dropdown<cr>",    desc = "Open buffer selection" },
+        { "<C-S-p>", "<cmd>Telescope projects theme=get_dropdown<cr>",   desc = "Open project selection" },
+        -- { "<leader>f", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", desc = "Open live grep" },
+        { "<C-S-q>", "<cmd>Telescope treesitter theme=get_dropdown<cr>", desc = "Open treesitter selection" },
+        { "z=",      "<cmd>Telescope spell_suggest<cr>",                 desc = "Open spell_suggest" },
     },
     dependencies = {
         {

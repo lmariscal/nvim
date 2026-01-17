@@ -1,7 +1,7 @@
 return {
     "dmtrKovalenko/fff.nvim",
     build = function()
-        require("fff.download").build_binary()
+        require("fff.download").download_or_build_binary()
     end,
     dependencies = {
         "folke/snacks.nvim"
@@ -16,6 +16,19 @@ return {
             preview_position = "left",
             preview_size = 0.5
         }
+    },
+    keys = {
+        {
+            "<leader>f",
+            function()
+                require('fff').live_grep({
+                    grep = {
+                        modes = { 'fuzzy', 'plain' }
+                    }
+                })
+            end,
+            desc = 'Live fffuzy grep',
+        },
     },
     lazy = false
 }
