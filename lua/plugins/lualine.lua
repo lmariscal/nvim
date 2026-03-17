@@ -16,7 +16,6 @@ return {
     lazy = false,
     config = function()
         local lualine = require("lualine")
-        local treesitter = require("nvim-treesitter")
         local lsp_status = require("lsp-status")
 
         lsp_status.register_progress()
@@ -220,25 +219,6 @@ return {
                 return msg
             end,
             icon = "",
-            color = { fg = colors.fg, gui = "bold" }
-        }
-
-        ins_left {
-            function()
-                return treesitter.statusline({
-                    indicator_size = 100,
-                    type_patterns = { 'class', 'function', 'method' },
-                    separator = ' -> '
-                })
-            end,
-            cond = function()
-                local status = treesitter.statusline({
-                    indicator_size = 100,
-                    type_patterns = { 'class', 'function', 'method' },
-                    separator = ' -> '
-                })
-                return status ~= nil and tostring(status) ~= "vim.NIL"
-            end,
             color = { fg = colors.fg, gui = "bold" }
         }
 
