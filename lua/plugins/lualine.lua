@@ -224,6 +224,21 @@ return {
 
         ins_left {
             function()
+                local navic = require("nvim-navic")
+                if navic.is_available() then
+                    return navic.get_location()
+                end
+                return ""
+            end,
+            cond = function()
+                local ok, navic = pcall(require, "nvim-navic")
+                return ok and navic.is_available()
+            end,
+            color = { fg = colors.fg, gui = "bold" }
+        }
+
+        ins_left {
+            function()
                 return lsp_status.status()
             end
         }
