@@ -1,7 +1,7 @@
 return {
     "nvim-telescope/telescope.nvim",
     lazy = false,
-    branch = "0.1.x",
+    branch = "master",
     keys = {
         { "bl",      "<cmd>Telescope buffers theme=get_dropdown<cr>",    desc = "Open buffer selection" },
         { "<C-S-p>", "<cmd>Telescope projects theme=get_dropdown<cr>",   desc = "Open project selection" },
