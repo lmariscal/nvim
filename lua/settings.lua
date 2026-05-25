@@ -41,21 +41,16 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function()
-    local unsupported_fts = {
-      javascript = true,
-      typescript = true,
-      javascriptreact = true,
-      typescriptreact = true,
-    }
-
-    if unsupported_fts[vim.bo.filetype] then
-      return
-    end
-
-    vim.lsp.buf.format({ async = false })
-  end,
+    pattern = "*",
+    callback = function()
+        if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then return end
+        vim.lsp.buf.format({
+            async = false,
+            filter = function(client)
+                return client.name ~= "ts_ls"
+            end,
+        })
+    end,
 })
 
 -- Tired of accidentally mistyping this command

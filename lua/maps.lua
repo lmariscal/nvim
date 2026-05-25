@@ -13,7 +13,7 @@ utils.map("n", "<C-S-r>", "<cmd>lua vim.lsp.buf.references()<cr>")
 -- utils.map("n", "<C-h>", "<cmd>lua vim.lsp.buf.hover()<cr>") -- <C-W>D
 -- utils.map("n", "<leader>ee", "<cmd>lua vim.diagnostic.open_float({ scope = 'line' })<cr>") -- K
 utils.map("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>")
-utils.map("n", "<C-S-l>", "<cmd>lua vim.lsp.buf.format({ async = false })<cr>")
+utils.map("n", "<C-S-l>", "<cmd>lua vim.lsp.buf.format({ async = false, filter = function(c) return c.name ~= 'ts_ls' end })<cr>")
 -- <C-o> is used to go back in the jump list
 
 -- utils.map("t", "<C-[>", "<C-\\><C-n>", { desc = "Actually defocus terminal on Esc" }) -- Disabled as I'm using vim mode with fish, and it conflicts with ESC
