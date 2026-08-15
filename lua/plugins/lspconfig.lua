@@ -1,7 +1,7 @@
 local allowed_servers = {
     "ts_ls", "ruff", "ty", "clangd", "slangd",
     "gopls", "protols", "basedpyright",
-    "rust_analyzer", "lua_ls",
+    "rust_analyzer", "lua_ls", "elixirls",
 }
 
 return {

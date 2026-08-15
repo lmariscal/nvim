@@ -40,6 +40,14 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "elixir", "heex", "eelixir", "surface" },
+    callback = function()
+        vim.bo.tabstop = 2
+        vim.bo.shiftwidth = 2
+    end,
+})
+
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
