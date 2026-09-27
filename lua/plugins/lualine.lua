@@ -12,13 +12,17 @@ vim.api.nvim_create_autocmd({ "BufWritePost", "DirChanged", "BufNewFile" }, {
 })
 
 return {
-    "hoob3rt/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     lazy = false,
     config = function()
         local lualine = require("lualine")
-        local lsp_status = require("lsp-status")
 
-        lsp_status.register_progress()
+        vim.api.nvim_create_autocmd("LspProgress", {
+            group = vim.api.nvim_create_augroup("LualineLspProgress", { clear = true }),
+            callback = function()
+                vim.cmd("redrawstatus")
+            end,
+        })
 
         -- Everforest Hard
         local colors = {
@@ -239,7 +243,7 @@ return {
 
         ins_left {
             function()
-                return lsp_status.status()
+                return vim.lsp.status()
             end
         }
 

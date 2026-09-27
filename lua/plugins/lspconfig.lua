@@ -8,7 +8,6 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     dependencies = {
-        "nvim-lua/lsp-status.nvim",
         "saghen/blink.cmp",
     },
     config = function()

@@ -15,7 +15,7 @@ function utils.telescope_if_git()
 
     local inside_work_tree = vim.fn.system("git rev-parse --is-inside-work-tree")
     if inside_work_tree == "true\n" then
-        local cwd = vim.loop.cwd()
+        local cwd = vim.uv.cwd()
         local top_level = vim.fn.system("git rev-parse --show-toplevel")
         if top_level == cwd .. "\n" then
             use_git_files = true
